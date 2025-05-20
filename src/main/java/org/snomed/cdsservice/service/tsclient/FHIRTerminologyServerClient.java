@@ -58,19 +58,19 @@ public class FHIRTerminologyServerClient {
 			List<CDSCoding> codings = new ArrayList<>();
 			boolean moreToLoad = true;
 			while (moreToLoad) {
-				ResponseEntity<ValueSet> response = restTemplate.exchange(format("/ValueSet/$expand?size=1000&_format=json&offset=%s&url=%s", offset, valueSetURI),
-						HttpMethod.GET, null, ValueSet.class);
-				ValueSet body = response.getBody();
-				ValueSetExpansion expansion = body.getExpansion();
-				List<CDSCoding> contains = expansion.getContains();
-				if (contains != null) {
-					codings.addAll(contains);
-					Integer total = expansion.getTotal();
-					moreToLoad = (total != null && codings.size() < total) || contains.isEmpty();
-					offset = codings.size();
-				} else {
+				// ResponseEntity<ValueSet> response = restTemplate.exchange(format("/ValueSet/$expand?size=1000&_format=json&offset=%s&url=%s", offset, valueSetURI),
+				// 		HttpMethod.GET, null, ValueSet.class);
+				// ValueSet body = response.getBody();
+				// ValueSetExpansion expansion = body.getExpansion();
+				// List<CDSCoding> contains = expansion.getContains();
+				// if (contains != null) {
+				// 	codings.addAll(contains);
+				// 	Integer total = expansion.getTotal();
+				// 	moreToLoad = (total != null && codings.size() < total) || contains.isEmpty();
+				// 	offset = codings.size();
+				// } else {
 					moreToLoad = false;
-				}
+				// }
 			}
 			valueSetCache.put(valueSetURI, codings.stream().map(cdsCoding -> new Coding(cdsCoding.getSystem(), cdsCoding.getCode(), null)).collect(Collectors.toList()));
 		}
