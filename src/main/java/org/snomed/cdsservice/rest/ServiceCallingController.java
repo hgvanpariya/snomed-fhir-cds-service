@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "cds-services/{id}")
+@CrossOrigin(origins = "*")
 public class ServiceCallingController {
 
 	@Autowired
