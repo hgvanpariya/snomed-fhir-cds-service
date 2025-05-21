@@ -20,6 +20,8 @@ COPY Snomed_Substance_DDDs.tsv /app/
 
 # Copy SSL keystore
 COPY src/main/resources/keystore/keystore.p12 /app/keystore/
+COPY src/main/resources/certificates /app/certificates
+
 
 # Copy the application JAR file
 COPY target/*.jar app.jar
